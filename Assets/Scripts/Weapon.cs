@@ -6,7 +6,6 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     // Start is called before the first frame update
-    public Camera playerCamera;
 
     //Shooting
     public bool isShooting, readyToShoot;
@@ -26,6 +25,10 @@ public class Weapon : MonoBehaviour
     public float bulletVelocity = 30;
     public float bulletPrefabLifeTime = 3f;
 
+    public GameObject muzzleEffect;
+
+    private Animator animator;
+
     public enum ShootingMode
     {
         Single,
@@ -39,6 +42,7 @@ public class Weapon : MonoBehaviour
     {
         readyToShoot = true;
         burstBulletsLeft = bulletsPerBurst;
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -63,6 +67,16 @@ public class Weapon : MonoBehaviour
 
     private void FireWeapon()
     {
+
+        //Muzzle flash
+        muzzleEffect.GetComponent<ParticleSystem>().Play();
+
+        //Play the shooting animation
+        animator.SetTrigger("RECOIL");
+
+        //Play the shooting sound
+        SoundManager.Instance.shootingSound_02.Play();
+
         readyToShoot = false;
         
         Vector3 shootingDirection = CalculateDirectionAndSpread().normalized;
@@ -98,7 +112,7 @@ public class Weapon : MonoBehaviour
 
     public Vector3 CalculateDirectionAndSpread()
     {
-        Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
 
         Vector3 targetPoint;
