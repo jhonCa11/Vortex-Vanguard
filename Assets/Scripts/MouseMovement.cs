@@ -16,7 +16,7 @@ public class MouseMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Locking the cursor to the moddle of the screen an making it invisible
+        //Locking the cursor to the middle of the screen an making it invisible
         Cursor.lockState = CursorLockMode.Locked;
     }
 
