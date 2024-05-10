@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
@@ -28,6 +29,12 @@ public class Weapon : MonoBehaviour
     public GameObject muzzleEffect;
 
     private Animator animator;
+
+    //Loading
+    public float reloadTime;
+    public int magazineSize, bulletsLeft;
+    public bool isReloading;
+
 
     public enum ShootingMode
     {
@@ -58,16 +65,28 @@ public class Weapon : MonoBehaviour
             isShooting = Input.GetKeyDown(KeyCode.Mouse0);
         }
         
-        if (readyToShoot && isShooting)
+        if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && isReloading == false){
+            Reload();
+        }
+        
+        if (readyToShoot && isShooting == false && isReloading == false && bulletsLeft <= 0){
+            Reload();
+        }
+
+        if (readyToShoot && isShooting && bulletsLeft > 0)
         {
             burstBulletsLeft = bulletsPerBurst;
             FireWeapon();
+        }
+
+        if (AmmoManager.Instance.ammoDisplay != null){
+            AmmoManager.Instance.ammoDisplay.text = $"{bulletsLeft/bulletsPerBurst}/{magazineSize/bulletsPerBurst}";
         }
     }
 
     private void FireWeapon()
     {
-
+        bulletsLeft--;
         //Muzzle flash
         muzzleEffect.GetComponent<ParticleSystem>().Play();
 
@@ -75,7 +94,15 @@ public class Weapon : MonoBehaviour
         animator.SetTrigger("RECOIL");
 
         //Play the shooting sound
+        
         SoundManager.Instance.shootingSound_02.Play();
+        /*
+        if (currentShootingMode == ShootingMode.Single){
+        SoundManager.Instance.shootingSound_02.Play();
+        } 
+        if (currentShootingMode == ShootingMode.Auto && isShooting){
+        SoundManager.Instance.ametrallaSound_02.Play();
+        }*/
 
         readyToShoot = false;
         
@@ -104,6 +131,17 @@ public class Weapon : MonoBehaviour
         }
     }
 
+    private void Reload(){
+
+        SoundManager.Instance.recargaSound_02.Play();
+        isReloading = true;
+        Invoke("ReloadCompleted", reloadTime);
+    }
+
+    private void ReloadCompleted(){
+        bulletsLeft = magazineSize;
+        isReloading = false;
+    }
     private void ResetShot()
     {
         readyToShoot = true;
