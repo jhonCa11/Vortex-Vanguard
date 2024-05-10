@@ -7,6 +7,8 @@ public class SoundManager : MonoBehaviour
     // Start is called before the first frame update
     public static SoundManager Instance {get; set;}
     public AudioSource shootingSound_02;
+    public AudioSource recargaSound_02;
+    public AudioSource ametrallaSound_02;
 
     private void Awake()
     {
@@ -17,6 +19,6 @@ public class SoundManager : MonoBehaviour
         else
         {
             Instance = this;
-       }
+        }
     }
 }

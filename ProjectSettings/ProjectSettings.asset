@@ -765,11 +765,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: d0f0e126-0dff-40e8-9647-85323b04fd4f
+  cloudProjectId: 2bd555ad-a63a-4ade-bf93-45bfeee715f3
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Vortex_Vanguard
-  organizationId: unity_2220211014
+  projectName: Vortex-Vanguard
+  organizationId: unity_2220211013
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
