@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+
+    public int bulletDamage;
     // Start is called before the first frame update
     private void OnCollisionEnter(Collision objetWeHit)
     {
@@ -18,6 +20,12 @@ public class Bullet : MonoBehaviour
         {
             print("Hit a wall!");
             CreateBulletImpactEffect(objetWeHit);
+            Destroy(gameObject);
+        }
+
+        if (objetWeHit.gameObject.CompareTag("Enemy"))
+        {
+            objetWeHit.gameObject.GetComponent<Enemy>().TakeDamage(bulletDamage);
             Destroy(gameObject);
         }
     }

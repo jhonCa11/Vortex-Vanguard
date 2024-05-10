@@ -7,7 +7,8 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     private CharacterController controller;
 
-    public float speed = 12f;
+    public float speed = 7f;
+    public float runspeed = 12f;
     public float gravity = -9.81f * 2;
     public float jumpHeight=3f;
     public Transform groundCheck;
@@ -43,7 +44,12 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = transform.right * x + transform.forward * z;
 
         //Move the player
-        controller.Move(move * speed * Time.deltaTime);
+        if(Input.GetButton("Run"))
+        {
+            controller.Move(move * runspeed * Time.deltaTime);;
+        } else{
+            controller.Move(move * speed * Time.deltaTime);
+        }
 
         //Jump
         if(Input.GetButtonDown("Jump") && isGrounded)
@@ -55,7 +61,12 @@ public class PlayerMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
 
         //Move the player
-        controller.Move(velocity * Time.deltaTime);
+        if(Input.GetButton("Run"))
+        {
+            controller.Move(velocity* 2 * Time.deltaTime);;
+        } else{
+            controller.Move(velocity * Time.deltaTime);
+        }
 
         //Check if the player is moving
         if (lastPosition != transform.position && isGrounded == true)

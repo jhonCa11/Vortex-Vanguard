@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+
+    public int weaponDamage;
     // Start is called before the first frame update
 
     //Shooting
@@ -110,6 +112,10 @@ public class Weapon : MonoBehaviour
 
         //Instantiate the bullet
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);
+
+        Bullet bul = bullet.GetComponent<Bullet>();
+        bul.bulletDamage = weaponDamage;
+
         //Pointng the bullet
         bullet.transform.forward = shootingDirection;
         //Shoot the bullet
